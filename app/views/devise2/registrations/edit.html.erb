@@ -1,0 +1,40 @@
+  <div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+      <div class="panel panel-brand">
+        <div class="panel-heading">
+          <h3 class="panel-title">Change Password</h3>
+        </div>
+
+        <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form'}) do |f| %>
+        <div class="panel-body">
+            <%= f.hidden_field :email, as: :hidden, :autofocus => true, class: 'form-control' %>
+
+          
+            <div class="form-group<%= ' has-error' if f.object.errors[:current_password].present? %>">
+              <label class="control-label">
+                Current password <%= f.object.errors[:current_password].join(' ') if f.object.errors[:current_password].present? %>
+              </label>
+              <%= f.password_field :current_password, :autocomplete => 'off', class: 'form-control' %>
+              
+            </div>
+            <div class="form-group<%= ' has-error' if f.object.errors[:password].present? %>">
+              <label class="control-label">
+                New password <%= f.object.errors[:password].join(' ') if f.object.errors[:password].present? %>
+              </label>
+              <%= f.password_field :password, :autocomplete => 'off', class: 'form-control' %>
+            </div>
+            <div class="form-group<%= ' has-error' if f.object.errors[:password_confirmation].present? %>">
+              <label class="control-label">
+                Password confirmation <%= f.object.errors[:password_confirmation].join(' ') if f.object.errors[:password_confirmation].present? %>
+              </label>
+              <%= f.password_field :password_confirmation, class: 'form-control' %>
+            </div>
+        
+          <%= f.submit 'Change Password', :class => 'btn btn-primary btn-block' %>
+        
+        </div>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
