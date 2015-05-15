@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513013156) do
+ActiveRecord::Schema.define(version: 20150514014946) do
+
+  create_table "user_contacts", force: true do |t|
+    t.string   "type_of_contact"
+    t.string   "contact_info"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_contacts", ["user_id"], name: "index_user_contacts_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.datetime "created_at"

@@ -1,71 +1,114 @@
-<h2>Sign up</h2>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="col-md-1"> 
+    </div> 
+    <div class="col-md-10">  
+      <h2>Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= devise_error_messages! %>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">Log-In Information</div>
-    <div class="panel-body">
-      <div class="row">
-        <div class="field col-md-6">
-          <%= f.label :email, class: "required" %><br />
-          <%= f.email_field :email, autofocus: true, class: "form-control" %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="field col-md-6">
-          <%= f.label :password, class: "required" %>
-          <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
-          <% end %><br />
-          <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
-        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">Log-In Information</div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="field col-md-6">
+                <%= f.label :email, class: "required" %><br />
+                <%= f.email_field :email, autofocus: true, class: "form-control" %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="field col-md-6">
+                <%= f.label :password, class: "required" %>
+                <% if @minimum_password_length %>
+                <em>(<%= @minimum_password_length %> characters minimum)</em>
+                <% end %><br />
+                <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+              </div>
 
-        <div class="field col-md-6">
-          <%= f.label :password_confirmation, class: "required" %><br />
-          <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
+              <div class="field col-md-6">
+                <%= f.label :password_confirmation, class: "required" %><br />
+                <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+        <br/>
+        <div class="clearfix"></div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">Personal Information</div> 
+          <div class="panel-body">
+            <div class="row">
+              <div class="field col-md-4">
+                <%= f.label :first_name, class: "required" %><br />
+                <%= f.text_field :first_name, class: "form-control" %>
+              </div>
+
+              <div class="field col-md-4">
+                <%= f.label :middle_name %><br />
+                <%= f.text_field :middle_name, class: "form-control" %>
+              </div>
+
+              <div class="field col-md-4">
+                <%= f.label :last_name, class: "required" %><br />
+                <%= f.text_field :last_name, class: "form-control" %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="field col-md-4">
+                <%= f.label :gender, class: "required" %><br />
+                <%= f.select :gender, SugarBites::Application::GENDER, {}, class: "form-control" %>
+              </div>
+
+              <div class="field col-md-4">
+                <%= f.label :birth_date %><br />
+                <%= f.date_select :birth_date, {start_year: 1920}, {class: "form-control"} %>
+              </div>
+            </div>  
+          </div>
+
+          <div class="panel panel-default" style="margin: 20px;">
+            <div class="panel-heading">
+              Contact Information 
+              <button class="btn btn-default pull-right" id="add_contact_info" type="button">Add</button>
+            </div> 
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Contact Number</th>
+                  <th>Type</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @user.user_contacts.each do |contact| %>
+                  <%= fields_for "user[user_contact][]", contact do |contact_fields| %>
+                    <tr>
+                      <td><%= contact_fields.text_field :type_of_contact %></td>
+                      <td><%= contact_fields.text_field :contact_info %></td>
+                    </tr>
+                  <% end %>
+                <% end %>
+<!-- <br />
+<h4>Social Media / Messaging Apps </h4>
+<% @social_media.find_each do |bsm| %>
+  <%= f.simple_fields_for :brand_social_media, bsm do |s| %>
+    <%= s.input :url, class: 'string url required form-control form-control', label: bsm.name, placeholder: social_media_default_value(bsm.name) %>
+    <%= s.input :social_medium_id, as: :hidden %>
+  <% end %>
+<% end %> -->
+              </tbody>     
+            </table>
+          </div>
+
+        </div>
+        <div class="actions">
+          <%= f.submit "Sign up" %>
+        </div>
+      <% end %>
     </div>
+    <div class="col-md-1"> 
+    </div> 
   </div>
-  <br/>
-  <div class="clearfix"></div>
-
-  <div class="panel panel-default">
-    <div class="panel-heading">Personal Information</div> 
-    <div class="panel-body">
-      <div class="row">
-        <div class="field col-md-4">
-          <%= f.label :first_name, class: "required" %><br />
-          <%= f.text_field :first_name, class: "form-control" %>
-        </div>
-
-        <div class="field col-md-4">
-          <%= f.label :middle_name %><br />
-          <%= f.text_field :middle_name, class: "form-control" %>
-        </div>
-
-        <div class="field col-md-4">
-          <%= f.label :last_name, class: "required" %><br />
-          <%= f.text_field :last_name, class: "form-control" %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="field col-md-4">
-          <%= f.label :gender, class: "required" %><br />
-          <%= f.select :gender, SugarBites::Application::GENDER, {}, class: "form-control" %>
-        </div>
-
-        <div class="field col-md-4">
-          <%= f.label :birth_date %><br />
-          <%= f.date_select :birth_date, {start_year: 1920}, {class: "form-control"} %>
-        </div>
-      </div>  
-    </div>
-  </div>
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

@@ -15,3 +15,19 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
+
+
+
+$(document).ready(function(){
+  $.fn.add_contact_info = function(){
+    $(this).click(function(){
+
+      alert(1);
+
+    });
+
+  }
+  $("#add_contact_info").add_contact_info();
+
+
+});
