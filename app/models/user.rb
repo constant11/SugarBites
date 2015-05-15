@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   validates_confirmation_of    :password, :on=>:create
   validates_length_of    :password, :within => Devise.password_length, :allow_blank => true
 
-
+  accepts_nested_attributes_for :user_contacts
 
   # validate :password_complexity
 

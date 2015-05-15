@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :clean_params, only: [:create, :update]
 
   # GET /users
   # GET /users.json
@@ -65,19 +66,25 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end    
+
+    def clean_params
+      # @user.birth_date = " #{params['birth_date(1i)']} #{params['birth_date(2i)']} #{params['birth_date(3i)']}"
+      user = params[:user]
+      @user.birth_date = Date.new user["birth_date(1i)"].to_i, user["birth_date(2i)"].to_i, user["birth_date(3i)"].to_i
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params[:user]
-      # attributes = params.require(:user).permit(
-      #   :first_name,
-      #   :middle_name,
-      #   :last_name,
-      #   :last_name,
-      #   :last_name,
-      #   :gender,
-      #   :birth_date
-      # )
+      # params[:user]
+      attributes = params.require(:user).permit(
+        :first_name,
+        :middle_name,
+        :last_name,
+        :gender,
+        :birth_date,
+        :user_contacts_attributes => [:id, :type_of_contact, :contact_info]
+      )
+      attributes
     end
 end

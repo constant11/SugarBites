@@ -3,16 +3,14 @@
     <div class="col-md-1"> 
     </div> 
     <div class="col-md-10">  
-      <%= simple_form_for @user do |f| %>
+      <%= simple_form_for @user, defaults: { input_html: { class: 'form-control' } } do |f| %>
 
         <div class="panel panel-default">
           <div class="panel-heading">Log-In Information</div>
           <div class="panel-body">
             <div class="row">
               <div class="field col-md-6">
-          <!--       <%= f.label :email, class: "required" %><br /> -->
-          <!--       <%= f.email_field :email, autofocus: true, class: "form-control" %> -->
-                <%= f.input :email, class: "form-control" %>
+                <%= f.input :email %>
               </div>
             </div>
       <!--       <div class="row">
@@ -21,12 +19,12 @@
                 <% if @minimum_password_length %>
                 <em>(<%= @minimum_password_length %> characters minimum)</em>
                 <% end %><br />
-                <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+                <%= f.password_field :password, autocomplete: "off" %>
               </div>
 
               <div class="field col-md-6">
                 <%= f.label :password_confirmation, class: "required" %><br />
-                <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
+                <%= f.password_field :password_confirmation, autocomplete: "off" %>
               </div>
             </div> -->
           </div>
@@ -39,32 +37,24 @@
           <div class="panel-body">
             <div class="row">
               <div class="field col-md-4">
-               <!--  <%= f.label :first_name, class: "required" %><br /> -->
-           <!--      <%= f.text_field :first_name, class: "form-control" %> -->
-                <%= f.input :first_name, class: "form-control" %>
+                <%= f.input :first_name %>
               </div>
 
               <div class="field col-md-4">
-              <!--   <%= f.label :middle_name %><br /> -->
-                <%= f.input :middle_name, class: "form-control" %>
+                <%= f.input :middle_name %>
               </div>
 
               <div class="field col-md-4">
-               <!--  <%= f.label :last_name, class: "required" %><br /> -->
-                <%= f.input :last_name, class: "form-control" %>
+                <%= f.input :last_name %>
               </div>
             </div>
             <div class="row">
               <div class="field col-md-4">
-            <!--     <%= f.label :gender, class: "required" %><br /> -->
-               <!--  <%= f.select :gender, SugarBites::Application::GENDER, {}, class: "form-control" %> -->
                 <%= f.input :gender, collection: SugarBites::Application::GENDER, prompt: "Select your gender", class: "form-control" %>
               </div>
 
               <div class="field col-md-4">
-               <!--  <%= f.label :birth_date %><br /> -->
-              <!--   <%= f.date_select :birth_date, {start_year: 1920}, {class: "form-control"} %> -->
-                <%= f.input :birth_date, as: :date, html5: true %>
+                <%= f.input :birth_date, as: :date, start_year: Date.today.year - 90, html5: true %>
               </div>
             </div>  
           </div>
@@ -77,35 +67,26 @@
             <table class="table table-hover">
               <thead>
                 <tr>
+                  <th>No.</th>
                   <th>Contact Number</th>
                   <th>Type</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-       <!--          <% @user.user_contacts.each do |contact| %>
-                  <%= fields_for "user[user_contact][]", contact do |contact_fields| %>
-                    <tr>
-                      <td><%= contact_fields.text_field :type_of_contact %></td>
-                      <td><%= contact_fields.text_field :contact_info %></td>
-                    </tr>
-                  <% end %>
-                <% end %> -->
-<!-- <br />
-<% @user.user_contacts.find_each do |contact| %>
-  <%= f.simple_fields_for :user_contacts do |contact_form| %>
-                    <tr>
-                      <td><%= contact_form.input :type_of_contact %></td>
-                      <td><%= contact_form.input :contact_info %></td>
-                    </tr>
-  <% end %>
-<% end %>  -->
-  <%= f.simple_fields_for :user_contacts do |contact_form| %>
-                    <tr>
-                      <td><%= contact_form.input :type_of_contact %></td>
-                      <td><%= contact_form.input :contact_info %></td>
-                    </tr>
-  <% end %>
+              <% @user.user_contacts.find_each do |contact| %>
+                <%= f.simple_fields_for :user_contacts, contact do |contact_form| %>
+                  <tr>
+                    <td class="hide"><%= contact_form.input :id %></td>
+                    <% x ||= 0 
+                      x += 1
+                    %>
+                    <td class="hide"><%= x %></td>
+                    <td><%= contact_form.input :type_of_contact %></td>
+                    <td><%= contact_form.input :contact_info %></td>
+                  </tr>
+                <% end %>
+              <% end %>
 
               </tbody>     
             </table>

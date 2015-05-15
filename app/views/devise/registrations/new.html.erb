@@ -90,14 +90,14 @@
                     </tr>
                   <% end %>
                 <% end %>
-<!-- <br />
+<br />
 <h4>Social Media / Messaging Apps </h4>
 <% @social_media.find_each do |bsm| %>
   <%= f.simple_fields_for :brand_social_media, bsm do |s| %>
     <%= s.input :url, class: 'string url required form-control form-control', label: bsm.name, placeholder: social_media_default_value(bsm.name) %>
     <%= s.input :social_medium_id, as: :hidden %>
   <% end %>
-<% end %> -->
+<% end %>
               </tbody>     
             </table>
           </div>
