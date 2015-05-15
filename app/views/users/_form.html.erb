@@ -74,14 +74,11 @@
                 </tr>
               </thead>
               <tbody>
-              <% @user.user_contacts.find_each do |contact| %>
+              <% @user.user_contacts.each_with_index do |contact, index| %>
                 <%= f.simple_fields_for :user_contacts, contact do |contact_form| %>
                   <tr>
                     <td class="hide"><%= contact_form.input :id %></td>
-                    <% x ||= 0 
-                      x += 1
-                    %>
-                    <td class="hide"><%= x %></td>
+                    <td><%= index+1 %></td>
                     <td><%= contact_form.input :type_of_contact %></td>
                     <td><%= contact_form.input :contact_info %></td>
                   </tr>
